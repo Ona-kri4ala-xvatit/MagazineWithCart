@@ -4,12 +4,26 @@ const ROOT_STORE_CARD = document.querySelector('.store-card-img');
 // ROOT_LOADER
 // ROOT_PRODUCTS
 // ROOT_ERROR
+document.querySelector('.loader').style.display = 'block';
+
+let CATALOG = []
+
+fetch('https://fakestoreapi.com/products')
+    .then(response => response.json())
+    .then(data => {
+        CATALOG = data;
+
+        setTimeout(() => {
+            new SpinnerPage().render();
+        }, 2000)
+    });
 
 
-fetch('').then(response => response.json()).then(prod => {
-
-});
-
+class SpinnerPage {
+    render() {
+        document.querySelector('.loader').style.display = 'none';
+    }
+}
 
 class LocalStorageUtil {
     keyName = null;
@@ -22,6 +36,13 @@ class LocalStorageUtil {
         //Получает продукты из локального хранилища по установленному ключу.
         //Если данные существуют, парсит их из формата JSON и возвращает массив продуктов.
         //Если данных нет, возвращает пустой массив.
+        const lsItem = localStorage.getItem(key);
+        if (lsItem === null) {
+            return JSON.parse(lsItem);
+        }
+        else {
+            return [];
+        }
     };
 
     putProducts(id) {
