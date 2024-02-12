@@ -1,27 +1,39 @@
-// ROOT_WRAPPER
-const ROOT_HEADER = document.querySelector('header');
+const ROOT_WRAPPER = document.querySelector('.wrapper');
+const ROOT_HEADER = document.querySelector('.header');
 const ROOT_STORE_CARD = document.querySelector('.store-card-img');
-// ROOT_LOADER
-// ROOT_PRODUCTS
-// ROOT_ERROR
-document.querySelector('.loader').style.display = 'block';
+const ROOT_LOADER = document.querySelector('.loader');
+const ROOT_PRODUCTS = document.querySelector('.products-wrapper');
+//const ROOT_ERROR
 
 let CATALOG = []
 
-fetch('https://fakestoreapi.com/products')
-    .then(response => response.json())
-    .then(data => {
-        CATALOG = data;
+fetch('https://fakestoreapi.com/products').then(response => response.json()).then(data => {
+    CATALOG = data;
 
-        setTimeout(() => {
-            new SpinnerPage().render();
-        }, 2000)
-    });
+    setTimeout(() => {
+        spinnerObj = new SpinnerPage;
+        spinnerObj.spinner();
+        spinnerObj.render();
+    }, 1000)
+});
+
+
+document.querySelector('.store-card-img').addEventListener('click', e => {
+    alert('sdfdsfsfsdf');
+});
+
+
+
 
 
 class SpinnerPage {
+    spinner() {
+        ROOT_LOADER.style.display = 'none';
+    }
+
     render() {
-        document.querySelector('.loader').style.display = 'none';
+        ROOT_HEADER.style.display = 'block';
+        ROOT_PRODUCTS.style.display = 'block';
     }
 }
 
