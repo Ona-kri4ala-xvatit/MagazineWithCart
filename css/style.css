@@ -5,7 +5,7 @@
 body {
     padding: 0;
     margin: 0;
-    background-color: #f0aa70;
+    background-color: #81BECE;
 }
 
 .loader {
@@ -26,15 +26,14 @@ body {
   }
 
 .wrapper {
-    width: 1110px;
+    width: 1210px;
     margin: 0 auto;
 }
 
 .header {
-    background-color: #ce7338;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-    display: none;
+    background-color: #378BA4;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
 }
 
 .store-card {
@@ -48,65 +47,34 @@ body {
     cursor: pointer;
 }
 
-.products-wrapper {
-    width: 350px;
+.products-items {
     padding: 20px 20px 30px 20px;
     margin-bottom: 30px;
-    background-color: #ce7338;
-    border-radius: 15px;
-    display: none;
+    background-color: #378BA4;
+    border-radius: 7px;
+    width: 1210px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
-.products-item {
+.product-item {
+    width: 300px;
     margin-bottom: 30px;
-    color: #f2dabf;
+    color: #E8EDE7;
+    border: 1px solid;
 }
 
-.products-item-to-basket-button {
+.product-item img {
+    width: 200px;
+}
+
+/* .active {
     width: 310px;
-    color: #f2dabf;
+    color: #E8EDE7;
     border: 1px solid;
     font-size: 20px;
     text-align: center;
     padding: 20px 60px;
     cursor: pointer;
-}
-
-
-
-.modal {
-    display: none; /* Скрыто по умолчанию */
-    position: fixed; /* Оставаться на месте */
-    z-index: 1; /* Сидеть на вершине */
-    left: 0;
-    top: 0;
-    width: 100%; /* Полная ширина */
-    height: 100%; /* Полная высота */
-    overflow: auto; /* Включите прокрутку, если это необходимо */
-    background-color: rgb(0,0,0); /* Цвет запасной вариант */
-    background-color: rgba(0,0,0,0.4); /* Черный с непрозрачностью */
-  }
-  
-  /* Модальное содержание/коробка */
-  .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto; /* 15% сверху и по центру */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%; /* Может быть больше или меньше, в зависимости от размера экрана */
-  }
-  
-  /* Кнопка закрытия */
-  .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
+} */
