@@ -23,7 +23,7 @@ class LocalStorageUtil {
 
     putProducts(id) {
         const products = this.getProducts();
-        
+
         let pushProduct = false;
         const index = products.indexOf(id);
         if (index === -1) {
@@ -40,6 +40,10 @@ class LocalStorageUtil {
 
 // Класс StoreCard
 class StoreCard {
+    constructor() {
+        this.modal = new Modal();
+    }
+
     handlerClear() {
         ROOT_STORE_CARD.innerHTML = '';
     }
@@ -49,29 +53,55 @@ class StoreCard {
         let htmlCatalog = '';
         let sumCatalog = 0;
 
-        // Здесь должна быть логика формирования HTML для корзины
-        // и вычисление общей суммы покупок
-
         ROOT_STORE_CARD.innerHTML = htmlCatalog;
+    }
+}
+
+// Класс для модального окна
+class Modal {
+    constructor() {
+        this.modal = document.getElementById('modal');
+        this.closeButton = document.getElementById('modal-close-button');
+        this.closeButton.addEventListener('click', () => this.hide());
+    }
+
+    show() {
+        this.modal.style.display = 'block';
+    }
+
+    hide() {
+        this.modal.style.display = 'none';
     }
 }
 
 // Класс Header
 class Header {
+    constructor() {
+        this.modal = new Modal();
+    }
+
     handlerOpenStoreCardPage() {
         storeCardPage.render();
+    }
+
+    addModalEventListener() {
+        const storeCardImg = document.querySelector('.store-card-img');
+        storeCardImg.addEventListener('click', () => {
+            this.modal.show()
+        });
     }
 
     render(count) {
         // Формирование HTML для верхней части страницы
         ROOT_HEADER.innerHTML = `<img class="store-card-img" src="img/cart.svg" alt=""> ${count}`;
+        this.addModalEventListener();
     }
 }
 
 // Класс Products
 class Products {
     constructor() {
-        this.classNameActive = 'active';
+        this.classNameActive = 'in-basket';
         this.labelAdd = 'Добавить в корзину';
         this.labelRemove = 'Удалить из корзины';
     }
@@ -79,7 +109,7 @@ class Products {
     handlerSetLocalStorage(button, id) {
         const { pushProduct, products } = localStorageUtil.putProducts(id);
         const buttonText = pushProduct ? this.labelRemove : this.labelAdd;
-        const buttonClass = pushProduct ? this.classNameActive : '';
+        const buttonClass = pushProduct ? this.classNameActive : 'basket';
 
         button.innerText = buttonText;
         button.classList.toggle(this.classNameActive, pushProduct);
@@ -96,7 +126,7 @@ class Products {
             const { id, title, price, description, image } = product;
             const productInStore = products.includes(id);
             const buttonText = productInStore ? this.labelRemove : this.labelAdd;
-            const buttonClass = productInStore ? this.classNameActive : 'no-active';
+            const buttonClass = productInStore ? this.classNameActive : 'basket';
 
             htmlCatalog += `
                 <div class="product">
@@ -104,7 +134,9 @@ class Products {
                     <div class="product-title"><b>${title}</b></div>
                     <div class="product-price">Price: ${price}$</div>
                     <div class="product-description">${description}</div>
+                    <div class="product-buttons">
                     <button class="${buttonClass}" onclick="productsPage.handlerSetLocalStorage(this, ${id})">${buttonText}</button>
+                    </div>
                 </div>
             `;
         });
@@ -118,13 +150,13 @@ class LoaderPage {
     handlerClear() {
         ROOT_LOADER.style.display = 'none';
     }
-    //Обновляет интерфейс страницы с учетом загруженных данных
-    // render() {
-    //     ROOT_HEADER.style.display = 'block';
-    //     ROOT_PRODUCTS.style.display = 'block';
-    // }
 }
 
+class ErrorPage {
+    render() {
+        ROOT_ERROR.innerHTML = 'Error';
+    }
+}
 
 // Инициализация данных
 const localStorageUtil = new LocalStorageUtil();
@@ -132,29 +164,23 @@ const storeCardPage = new StoreCard();
 const headerPage = new Header();
 const productsPage = new Products();
 const loaderPage = new LoaderPage();
+const errorPage = new ErrorPage();
 let CATALOG = [];
-
-const errorPage = {
-    render() {
-        ROOT_ERROR.innerHTML = 'Ошибка загрузки данных';
-    }
-};
-
 
 ROOT_LOADER.style.display = 'block';
 
 fetch('https://fakestoreapi.com/products').then(response => response.json()).then(data => {
-        CATALOG = data;
+    CATALOG = data;
 
-        setTimeout(() => {
-            loaderPage.handlerClear();
-            const productsStore = localStorageUtil.getProducts();
-            headerPage.render(productsStore.length);
-            productsPage.render();
-        }, 500);
-    })
+    setTimeout(() => {
+        loaderPage.handlerClear();
+        const productsStore = localStorageUtil.getProducts();
+        headerPage.render(productsStore.length);
+        productsPage.render();
+    }, 5000);
+})
     .catch(error => {
         loaderPage.handleClear();
         errorPage.render();
-        console.error('Ошибка загрузки данных:', error);
+        console.error('Error: ', error);
     });

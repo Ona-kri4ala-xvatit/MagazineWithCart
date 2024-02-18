@@ -66,12 +66,19 @@ header {
     border: 3px solid #81BECE;
     padding: 10px;
     margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .product img {
     width: 200px;
     height: 200px;
     object-fit: cover;
+}
+
+.product-buttons {
+    margin-top: auto;
 }
 
 button {
@@ -81,9 +88,10 @@ button {
     color: inherit;
     background-color: transparent;
     cursor: pointer;
+    width: 100%;
 }
 
-.no-active {
+.basket, .in-basket {
     width: 200px;
     background-color: #81BECE;
     border: 1px solid;
@@ -99,5 +107,43 @@ button {
 }
 
 .product-description {
+    font-size: 12px;
     margin-bottom: 20px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.modal-close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.modal-close-button:hover,
+.modal-close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }
